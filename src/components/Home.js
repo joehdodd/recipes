@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { isiPhoneX } from '../../isiPhoneX';
 import db from '../../firebase.js';
+import { fetchRecipes } from '../Actions/recipes';
 
 class Home extends Component {
   constructor(props) {
@@ -24,12 +25,7 @@ class Home extends Component {
     };
   }
   componentDidMount() {
-    const publicRecipesRef = db.collection('publicRecipes');
-    const recipes = [];
-    publicRecipesRef.get().then(querySnapshot => {
-      querySnapshot.forEach(doc => recipes.push(doc.data()));
-      this.setState({ recipes: [...recipes] });
-    });
+    this.props.fetchRecipes();
   }
   onAdd = (title, ingredients) => {
     return !!title && !!ingredients
@@ -138,7 +134,7 @@ class Home extends Component {
             alignItems: 'center'
           }}
         >
-          {this.recipes(this.state.recipes)}
+          {this.recipes(this.props.recipes.recipes)}
         </ScrollView>
       </View>
     );
@@ -162,10 +158,16 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state) {
+function mapStateToProps({ recipes }) {
   return {
-    recipes: state
-  }
+    recipes
+  };
 }
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => ({
+  fetchRecipes() {
+    dispatch(fetchRecipes());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
