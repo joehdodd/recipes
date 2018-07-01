@@ -7,167 +7,52 @@ import {
   ScrollView,
   TextInput,
   Button,
-  Alert
+  Alert,
+  StatusBar,
+  TouchableOpacity
 } from 'react-native';
-import { isiPhoneX } from '../../isiPhoneX';
-import db from '../../firebase.js';
-import { fetchRecipes } from '../Actions/recipes';
+import ContainerView from './ContainerView';
+
+const Card = props => (
+  <TouchableOpacity
+    style={styles.card}
+    onPress={() => props.navigation.navigate('Recipes')}
+    // shadowOffset={{ width: 10, height: 10 }}
+    // shadowColor="black"
+    // shadowOpacity="1.0"
+  >
+    <Text>Recipes</Text>
+  </TouchableOpacity>
+);
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: [],
-      title: null,
-      ingredients: null,
-      recipes: [],
-      filter: null
-    };
-  }
-  componentDidMount() {
-    this.props.fetchRecipes();
-  }
-  onAdd = (title, ingredients) => {
-    return !!title && !!ingredients
-      ? this.setState({
-          recipes: [
-            { title: title, ingredients: ingredients },
-            ...this.state.recipes
-          ],
-          title: null,
-          ingredients: null
-        })
-      : Alert.alert('Please fill out all fields!');
-  };
-  onAlert = () => {
-    return Alert.alert('PFFF! 💻');
-  };
-  recipes = recipes => {
-    let filtered = recipes.filter(recipe => {
-      const { filter } = this.state;
-      if (!!filter) {
-        let lcf = filter.toLowerCase();
-        let ing = recipe.ingredients.toLowerCase();
-        let title = recipe.title.toLowerCase();
-        let rec = ing.includes(lcf) || title.includes(lcf);
-        return rec;
-      }
-      return true;
-    });
-    return !!filtered.length ? (
-      filtered.map((recipe, i) => (
-        <View
-          key={i}
-          style={{
-            width: '100%',
-            padding: 10,
-            marginBottom: 10,
-            backgroundColor: '#fff',
-            borderRadius: 6,
-            shadowOffset: { width: 0, height: 2 },
-            shadowColor: 'grey',
-            shadowOpacity: 0.5
-          }}
-        >
-          <Text style={{ fontSize: 24 }} key={i} onPress={() => this.onAlert()}>
-            Title: {recipe.title}
-          </Text>
-          <Text>Ingredients: {recipe.ingredients}</Text>
-        </View>
-      ))
-    ) : (
-      <Text
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 32
-        }}
-      >
-        No Results... 😢
-      </Text>
-    );
+  static navigationOptions = {
+    title: 'Home'
   };
   render() {
     return (
-      <View>
-        <View style={{ justifyContent: 'flex-start' }}>
-          <Text style={styles.bigText}>Recipes | 🌮</Text>
-          <View style={{ width: '100%' }}>
-            <TextInput
-              style={styles.input}
-              onChangeText={title => this.setState({ title })}
-              value={this.state.title}
-              placeholder="Recipe title..."
-            />
-            <TextInput
-              style={styles.input}
-              onChangeText={ingredients => this.setState({ ingredients })}
-              value={this.state.ingredients}
-              placeholder="Ingredient list..."
-            />
-            <Button
-              buttonStyle={{ width: '15%' }}
-              title="Add"
-              onPress={() =>
-                this.onAdd(this.state.title, this.state.ingredients)
-              }
-            />
-          </View>
-          <View>
-            <TextInput
-              style={styles.input}
-              onChangeText={filter => this.setState({ filter })}
-              value={this.state.filter}
-              placeholder="Search..."
-            />
-          </View>
-        </View>
-        <ScrollView
-          style={{
-            paddingTop: 10,
-            width: '100%',
-            flex: 1
-          }}
-          contentContainerStyle={{
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          {this.recipes(this.props.recipes.recipes)}
-        </ScrollView>
-      </View>
+      <ContainerView>
+        <Card {...this.props} />
+      </ContainerView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  bigText: {
-    fontSize: 32,
-    fontWeight: '700',
-    marginBottom: 8
-  },
-  input: {
-    height: 40,
+  card: {
+    flex: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 250,
-    marginBottom: 2.5,
-    borderColor: 'transparent',
+    height: 250,
+    borderRadius: 4,
     backgroundColor: '#fff',
+    shadowRadius: 6,
     borderRadius: 6,
-    borderWidth: 1
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: 'grey',
+    shadowOpacity: 0.5
   }
 });
 
-function mapStateToProps({ recipes }) {
-  return {
-    recipes
-  };
-}
-
-const mapDispatchToProps = dispatch => ({
-  fetchRecipes() {
-    dispatch(fetchRecipes());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
