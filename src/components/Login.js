@@ -11,7 +11,7 @@ export default class Login extends Component {
     fb
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('MainNavigator'))
+      .then(() => this.props.navigation.navigate('Loading'))
       .catch(error => this.setState({ errorMessage: error.message }));
   };
 
