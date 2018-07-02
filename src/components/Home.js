@@ -12,19 +12,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import ContainerView from './ContainerView';
+import Account from './Account';
 import { fb } from '../../firebase.js';
-
-const Card = props => (
-  <TouchableOpacity
-    style={styles.card}
-    onPress={() => props.navigation.navigate('Recipes')}
-    // shadowOffset={{ width: 10, height: 10 }}
-    // shadowColor="black"
-    // shadowOpacity="1.0"
-  >
-    <Text>Recipes</Text>
-  </TouchableOpacity>
-);
 
 class Home extends Component {
   state = { currentUser: null, displayName: null };
@@ -42,7 +31,7 @@ class Home extends Component {
       !!currentUser &&
       currentUser
         .updateProfile({
-          displayName: displayName,
+          displayName: displayName
         })
         .then(function() {
           console.log('success!');
@@ -54,22 +43,21 @@ class Home extends Component {
   handleSignOut = async () => {
     return await fb.auth().signOut();
   };
+  onChangeText = text => {
+    this.setState(text);
+  };
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, displayName } = this.state;
     return (
       <ContainerView>
-        {/* <Card {...this.props} /> */}
-        <TextInput
-          style={styles.textInput}
-          autoCapitalize="none"
-          placeholder="Change your display name..."
-          onChangeText={displayName => this.setState({ displayName })}
-          value={this.state.displayName}
+        <Account
+          styles={styles}
+          currentUser={currentUser}
+          displayName={displayName}
+          handleDisplayName={this.handleDisplayName}
+          handleSignOut={this.handleSignOut}
+          onChangeText={this.onChangeText}
         />
-        <Button title="Change Display Name" onPress={this.handleDisplayName} />
-        <Button title="Sign Out" onPress={this.handleSignOut} />
-        {!!currentUser &&
-          currentUser.displayName && <Text>Hi {currentUser.displayName}!</Text>}
       </ContainerView>
     );
   }
