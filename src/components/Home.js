@@ -12,6 +12,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import ContainerView from './ContainerView';
+import { fb } from '../../firebase.js';
 
 const Card = props => (
   <TouchableOpacity
@@ -26,13 +27,49 @@ const Card = props => (
 );
 
 class Home extends Component {
+  state = { currentUser: null, displayName: null };
+  componentDidMount() {
+    const { currentUser } = fb.auth();
+    console.log(fb.auth());
+    this.setState({ currentUser });
+  }
   static navigationOptions = {
     title: 'Home'
   };
+  handleDisplayName = () => {
+    const { displayName, currentUser } = this.state;
+    !!displayName &&
+      !!currentUser &&
+      currentUser
+        .updateProfile({
+          displayName: displayName,
+        })
+        .then(function() {
+          console.log('success!');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+  };
+  handleSignOut = async () => {
+    return await fb.auth().signOut();
+  };
   render() {
+    const { currentUser } = this.state;
     return (
       <ContainerView>
-        <Card {...this.props} />
+        {/* <Card {...this.props} /> */}
+        <TextInput
+          style={styles.textInput}
+          autoCapitalize="none"
+          placeholder="Change your display name..."
+          onChangeText={displayName => this.setState({ displayName })}
+          value={this.state.displayName}
+        />
+        <Button title="Change Display Name" onPress={this.handleDisplayName} />
+        <Button title="Sign Out" onPress={this.handleSignOut} />
+        {!!currentUser &&
+          currentUser.displayName && <Text>Hi {currentUser.displayName}!</Text>}
       </ContainerView>
     );
   }

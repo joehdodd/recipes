@@ -7,7 +7,8 @@ firebase.initializeApp({
   authDomain: constants.FBD,
   projectId: constants.FBID
 });
+const fb = firebase;
 const db = firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 db.settings(settings);
-export default db;
+export {fb, db };

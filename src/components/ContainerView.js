@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { isiPhoneX } from '../../isiPhoneX';
 
 const ContainerView = props => (
-  <View style={[styles.container, { paddingTop: isiPhoneX() ? 40 : 25 }]}>
+  <View style={[styles.container, { paddingTop: isiPhoneX() ? 40 : 32 }]}>
     {props.children}
   </View>
 )
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e9ebee',
     // alignItems: 'flex-start',
     // justifyContent: 'center',
-    padding: 10
+    padding: 16
   }
 });
 

@@ -1,11 +1,18 @@
-import db from '../../firebase.js';
+import { db } from '../../firebase.js';
 
 export const fetchRecipes = () => dispatch => {
   dispatch(fetching());
   const publicRecipesRef = db.collection('publicRecipes');
   const recipes = [];
   publicRecipesRef.get().then(querySnapshot => {
-    querySnapshot.forEach(doc =>recipes.push(doc.data()));
+    querySnapshot.forEach(doc => {
+      console.log(doc)
+      let recipeData = {
+        id: doc.id,
+        data: doc.data()
+      }
+      return recipes.push(recipeData)
+    });
     dispatch(fetchSuccess(recipes))
   }).catch(err => dispatch(fetchError(err)));
 };
