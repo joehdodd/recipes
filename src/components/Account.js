@@ -82,20 +82,6 @@ class Account extends Component {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 250,
-    height: 250,
-    borderRadius: 4,
-    backgroundColor: '#fff',
-    shadowRadius: 6,
-    borderRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: 'grey',
-    shadowOpacity: 0.5
-  },
   bigText: {
     fontSize: 32,
     fontWeight: '700',

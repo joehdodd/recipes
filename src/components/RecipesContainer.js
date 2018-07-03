@@ -16,6 +16,7 @@ import db from '../../firebase.js';
 import { fetchRecipes } from '../Actions/recipes';
 import ContainerView from './ContainerView';
 import RecipeList from './RecipeList';
+import RecipeMenu from './RecipeMenu';
 
 class RecipesContainer extends Component {
   static navigationOptions = {
@@ -43,13 +44,14 @@ class RecipesContainer extends Component {
   };
   render() {
     return (
-      <ContainerView>
+      <View style={{ backgroundColor: 'transparent', flex: 1 }}>
+        <RecipeMenu/>
         <View style={styles.container}>
           <ScrollView
             style={{
-              paddingTop: 10,
               width: '100%',
-              flex: 1
+              flex: 1,
+              paddingTop: 5
             }}
             contentContainerStyle={{
               justifyContent: 'center',
@@ -63,7 +65,7 @@ class RecipesContainer extends Component {
             />
           </ScrollView>
         </View>
-      </ContainerView>
+      </View>
     );
   }
 }
@@ -71,7 +73,10 @@ class RecipesContainer extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%'
+    width: '100%',
+    backgroundColor: '#e9ebee',
+    padding: 16,
+    paddingTop: 0
   },
   bigText: {
     fontSize: 32,

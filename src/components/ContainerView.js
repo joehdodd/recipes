@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { isiPhoneX } from '../../isiPhoneX';
 
 const ContainerView = props => (
-  <View style={[styles.container, { paddingTop: isiPhoneX() ? 40 : 32 }]}>
+  <View style={[styles.container, { paddingTop: isiPhoneX() ? 40 : 28 }]}>
     {props.children}
   </View>
 )

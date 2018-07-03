@@ -4,8 +4,9 @@ import { Provider } from 'react-redux';
 import Store from './src/configureStore';
 import { isiPhoneX } from './isiPhoneX';
 // import Navigator from './src/Navigator';
-import Home from './src/components/Home';
+import HomeContainer from './src/components/HomeContainer';
 import RecipesContainer from './src/components/RecipesContainer';
+import RecipesNavigator from './src/components/RecipesNavigator';
 import Account from './src/components/Account';
 import Recipe from './src/components/Recipe';
 import {
@@ -20,7 +21,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const MainNavigator = createBottomTabNavigator(
   {
-    Home: { screen: Home },
+    Home: { screen: HomeContainer },
     Recipes: { screen: RecipesContainer },
     Account: { screen: Account }
   },
