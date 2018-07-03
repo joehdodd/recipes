@@ -2,12 +2,10 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
 const RecipeList = props => {
-  console.log(props);
   return props.recipes.map((recipe, i) => (
     <TouchableOpacity
       onPress={() => {
-        props.navigation.navigate('Recipe');
-        // props.renderRecipe(recipe.id)
+        props.renderRecipe(recipe.id)
       }}
       key={i}
       style={{

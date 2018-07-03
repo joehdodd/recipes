@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
-import ContainerView from './ContainerView';
-import { View, Text } from 'react-native';
+// import ContainerView from './ContainerView';
+import { View, Text, Button } from 'react-native';
 
 class Recipe extends Component {
-  static navigationOptions = {
-  }
   render() {
-    // const { recipe } = this.props;
-    console.log(this.props);
+    const { data } = this.props.recipe;
     return (
-      <ContainerView>
-        <Text>Hi</Text>
-      </ContainerView>
-      // <ContainerView>
-      //   <Text style={{fontSize: 48}}>{recipe.title}</Text>
-      //   <Text>{recipe.prepTime}</Text>
-      //   <Text style={{fontWeight: '700'}}>Instructions</Text>
-      //   <Text>{recipe.instructions}</Text>
-      //   <Text>{recipe.ingredients}</Text>
-      // </ContainerView>
+      <View>
+        <Button onPress={() => this.props.onGoBack()} title="Back"/>
+        <Text style={{ fontSize: 48 }}>{data.title}</Text>
+        <Text>{data.prepTime}</Text>
+        <Text style={{ fontWeight: '700' }}>Instructions</Text>
+        <Text>{data.instructions}</Text>
+        <Text>{data.ingredients}</Text>
+      </View>
     );
   }
 }

@@ -21,7 +21,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const MainNavigator = createBottomTabNavigator(
   {
-    Home: { screen: HomeContainer },
+    // Home: { screen: HomeContainer },
     Recipes: { screen: RecipesContainer },
     Account: { screen: Account }
   },
@@ -56,7 +56,7 @@ const MainNavigator = createBottomTabNavigator(
     })
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Reicpes',
     tabBarOptions: {
       style: {
         paddingBottom: 16,

@@ -11,7 +11,7 @@ const ContainerView = props => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e9ebee',
+    backgroundColor: '#f7f7f7',
     // alignItems: 'flex-start',
     // justifyContent: 'center',
     padding: 16

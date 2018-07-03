@@ -13,10 +13,16 @@ import {
 } from 'react-native';
 import { isiPhoneX } from '../../isiPhoneX';
 import db from '../../firebase.js';
-import { fetchRecipes } from '../Actions/recipes';
+import {
+  fetchRecipes,
+  setRecipeInputValues,
+  addRecipe
+} from '../Actions/recipes';
 import ContainerView from './ContainerView';
-import RecipeList from './RecipeList';
 import RecipeMenu from './RecipeMenu';
+import RecipeList from './RecipeList';
+import RecipeAdd from './RecipeAdd';
+import Recipe from './Recipe';
 
 class RecipesContainer extends Component {
   static navigationOptions = {
@@ -31,7 +37,8 @@ class RecipesContainer extends Component {
       recipes: [],
       filter: null,
       showRecipe: false,
-      recipe: null
+      recipe: null,
+      active: 'All'
     };
   }
   componentDidMount() {
@@ -40,30 +47,55 @@ class RecipesContainer extends Component {
   renderRecipe = id => {
     const recipe = this.props.recipes.recipes.find(rec => rec.id === id);
     console.log(recipe);
-    this.setState({ recipe: recipe });
+    this.setState({ recipe: recipe, showRecipe: true });
+  };
+  onNav = nav => {
+    this.setState({ active: nav });
+  };
+  onChange = (value, name) => {
+    this.props.onSetRecipeInputValues(value, name);
+  };
+  onSubmitRecipe = () => {
+    const { inputValues } = this.props.recipes;
+    this.props.onSubmitRecipe(this.props.recipes.inputValues);
+  };
+  onGoBack = () => {
+    this.setState({ showRecipe: false });
   };
   render() {
+    const { active, recipe, showRecipe } = this.state;
     return (
       <View style={{ backgroundColor: 'transparent', flex: 1 }}>
-        <RecipeMenu/>
+        <RecipeMenu onNav={this.onNav} active={active} />
         <View style={styles.container}>
-          <ScrollView
-            style={{
-              width: '100%',
-              flex: 1,
-              paddingTop: 5
-            }}
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <RecipeList
-              {...this.props}
-              renderRecipe={this.renderRecipe}
-              recipes={this.props.recipes.recipes}
-            />
-          </ScrollView>
+          {active === 'All' &&
+            !showRecipe && (
+              <ScrollView
+                style={{
+                  width: '100%',
+                  flex: 1,
+                  paddingTop: 5
+                }}
+                contentContainerStyle={{
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <RecipeList
+                  {...this.props}
+                  renderRecipe={this.renderRecipe}
+                  recipes={this.props.recipes.recipes}
+                />
+              </ScrollView>
+            )}
+          {active === 'Add' &&
+            !showRecipe && (
+              <RecipeAdd
+                onSubmit={this.onSubmitRecipe}
+                onChange={this.onChange}
+              />
+            )}
+          {showRecipe && <Recipe recipe={recipe} onGoBack={this.onGoBack}/>}
         </View>
       </View>
     );
@@ -103,6 +135,12 @@ function mapStateToProps({ recipes }) {
 const mapDispatchToProps = dispatch => ({
   fetchRecipes() {
     dispatch(fetchRecipes());
+  },
+  onSetRecipeInputValues(value, name) {
+    dispatch(setRecipeInputValues(value, name));
+  },
+  onSubmitRecipe(values) {
+    dispatch(addRecipe(values));
   }
 });
 
