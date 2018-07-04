@@ -8,14 +8,14 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
-import Card from './Card';
+import RecipeCard from './RecipeCard';
 import RecipeInput from './RecipeInput';
 import RecipeButton from './RecipeButton';
 
 const RecipeAdd = props => (
   <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
     <ScrollView style={styles.scroll}>
-      <Card>
+      <RecipeCard>
         <Text>Add a recipe!</Text>
         <RecipeInput
           onChange={props.onChange}
@@ -48,7 +48,7 @@ const RecipeAdd = props => (
           value={props.values.prep}
         />
         <RecipeButton width={116} title="Add" onPress={() => props.onSubmit()} />
-      </Card>
+      </RecipeCard>
     </ScrollView>
   </KeyboardAvoidingView>
 );
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   scroll: {
-    flex: 1
+    flex: 1,
+    paddingTop: 5
   }
 });
 

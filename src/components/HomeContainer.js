@@ -12,7 +12,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import ContainerView from './ContainerView';
-import Card from './Card';
+// import Card from './Card';
 
 class HomeContainer extends Component {
   static navigationOptions = {
@@ -22,9 +22,9 @@ class HomeContainer extends Component {
     return (
       <ContainerView>
         <ScrollView style={{flex: 1}}>
-          <Card title="Favorites" />
-          <Card title="Other" />
-          <Card title="Stuff" />
+          {/* <Card title="Favorites" /> */}
+          {/* <Card title="Other" /> */}
+          {/* <Card title="Stuff" /> */}
         </ScrollView>
       </ContainerView>
     );
