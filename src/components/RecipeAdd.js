@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Card from './Card';
 import RecipeInput from './RecipeInput';
+import RecipeButton from './RecipeButton';
 
 const RecipeAdd = props => (
   <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -21,12 +22,14 @@ const RecipeAdd = props => (
           placeholder={'Title'}
           name={'title'}
           required
+          value={props.values.title}
         />
         <RecipeInput
           onChange={props.onChange}
           placeholder={'Ingredients'}
           name={'ingredients'}
           required
+          value={props.values.ingredients}
         />
         <RecipeInput
           onChange={props.onChange}
@@ -35,14 +38,16 @@ const RecipeAdd = props => (
           height={150}
           multiline
           required
+          value={props.values.instructions}
         />
         <RecipeInput
           onChange={props.onChange}
           placeholder={'Prep-time'}
           name={'prep'}
           required
+          value={props.values.prep}
         />
-        <Button title="Add" onPress={() => props.onSubmit()} />
+        <RecipeButton width={116} title="Add" onPress={() => props.onSubmit()} />
       </Card>
     </ScrollView>
   </KeyboardAvoidingView>

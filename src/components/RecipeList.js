@@ -13,10 +13,12 @@ const RecipeList = props => {
         padding: 10,
         marginBottom: 10,
         backgroundColor: '#fff',
-        borderRadius: 6,
-        shadowOffset: { width: 0, height: 2 },
+        borderRadius: 4,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 1 },
         shadowColor: 'grey',
-        shadowOpacity: 0.5
+        shadowOpacity: 0.5,
+        elevation: 2
       }}
     >
       <Text style={{ fontSize: 24 }}>Title: {recipe.data.title}</Text>

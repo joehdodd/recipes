@@ -64,6 +64,7 @@ class RecipesContainer extends Component {
   };
   render() {
     const { active, recipe, showRecipe } = this.state;
+    const { inputValues } = this.props.recipes;
     return (
       <View style={{ backgroundColor: 'transparent', flex: 1 }}>
         <RecipeMenu onNav={this.onNav} active={active} />
@@ -91,6 +92,7 @@ class RecipesContainer extends Component {
           {active === 'Add' &&
             !showRecipe && (
               <RecipeAdd
+                values={inputValues}
                 onSubmit={this.onSubmitRecipe}
                 onChange={this.onChange}
               />
@@ -108,7 +110,8 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#e9ebee',
     padding: 16,
-    paddingTop: 0
+    paddingTop: 0,
+    paddingBottom: 0
   },
   bigText: {
     fontSize: 32,
